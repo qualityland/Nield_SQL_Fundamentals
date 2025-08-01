@@ -128,4 +128,46 @@ FROM STATION_DATA
 WHERE report_code LIKE 'B_C%';
 
 
+-- booleans are represented with 0/1
+SELECT count(*)
+FROM STATION_DATA
+WHERE tornado = 1 and hail = 1;
+
+--  SQLite and MySQL allow to use true/false instead
+SELECT count(*)
+FROM STATION_DATA
+WHERE tornado = true AND hail = true;
+
+
+-- NULL
+SELECT *
+FROM STATION_DATA
+WHERE snow_depth IS NULL;
+
+
+-- does not include NULL values
+SELECT *
+FROM STATION_DATA
+WHERE precipitation <= 0.5;
+
+
+-- NULL values have to be included explicitly
+SELECT *
+FROM STATION_DATA
+WHERE precipitation IS NULL OR precipitation <= 0.5;
+
+
+-- elegant way to handle NULL: coalesce() function
+SELECT *
+FROM STATION_DATA
+WHERE coalesce(precipitation, 0) <= 0.5;
+
+
+-- coalesce() in SELECT statment
+SELECT
+    report_code
+  , coalesce(precipitation, 0) AS rainfall
+FROM STATION_DATA;
+
+
 -- 
