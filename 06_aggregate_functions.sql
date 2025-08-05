@@ -63,8 +63,3 @@ SELECT year,
  WHERE tornado = 1
  GROUP BY year;
 
-
-
-
-SELECT count(*)
-  FROM STATION_DATA;
