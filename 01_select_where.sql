@@ -1,7 +1,12 @@
--- all culumns
-SELECT
-    *
-FROM CUSTOMER;
+-- all columns
+SELECT *
+ FROM CUSTOMER;
+
+
+-- limit to 2 records
+SELECT *
+ FROM CUSTOMER
+LIMIT 2;
 
 
 -- specific columns
@@ -11,7 +16,7 @@ SELECT
 FROM CUSTOMER;
 
 
--- calculate additional columns with an alias
+-- calculate additional columns and use an alias
 SELECT
     PRODUCT_ID
   , DESCRIPTION
@@ -20,7 +25,7 @@ SELECT
 FROM PRODUCT;
 
 
--- same but rounded and with additional alias
+-- rounded with additional alias
 SELECT
     PRODUCT_ID
   , DESCRIPTION
@@ -44,130 +49,133 @@ FROM CUSTOMER;
 
 
 -- switch to weather stations database
-SELECT
-    *
-FROM STATION_DATA;
+SELECT *
+  FROM STATION_DATA;
 
 
 -- specific year
-SELECT
-    *
-FROM STATION_DATA
-WHERE year = 2010;
+SELECT *
+  FROM STATION_DATA
+ WHERE year = 2010;
 
 
 -- everything but 2010
-SELECT
-    *
-FROM STATION_DATA
-WHERE year != 2010;
+SELECT *
+  FROM STATION_DATA
+ WHERE year != 2010;
 
-SELECT
-    *
-FROM STATION_DATA
-WHERE year <> 2010;
+SELECT *
+  FROM STATION_DATA
+ WHERE year <> 2010;
 
 
 -- between two values
-SELECT
-    *
-FROM STATION_DATA
-WHERE year BETWEEN 2005 AND 2010;
+SELECT *
+  FROM STATION_DATA
+ WHERE year BETWEEN 2005 AND 2010;
 
 
 -- multiple where clauses using AND
-SELECT
-    *
-FROM STATION_DATA
-WHERE year >= 2005
-  AND year <= 2010;
+SELECT *
+  FROM STATION_DATA
+ WHERE year >= 2005
+   AND year <= 2010;
 
 
 -- using OR
 SELECT *
-FROM STATION_DATA
-WHERE month = 3
-   OR month = 6
-   OR month = 9
-   OR month = 12;
+  FROM STATION_DATA
+ WHERE month = 3
+    OR month = 6
+    OR month = 9
+    OR month = 12;
 
 
 -- using IN
 SELECT *
-FROM STATION_DATA
-WHERE month IN (3, 6, 9, 12);
+  FROM STATION_DATA
+ WHERE month IN (3, 6, 9, 12);
 
 
 -- using NOT IN
 SELECT *
-FROM STATION_DATA
-WHERE month NOT IN (3, 6, 9, 12);
+  FROM STATION_DATA
+ WHERE month NOT IN (3, 6, 9, 12);
 
 
 -- trick: using modulo operator
 SELECT *
-FROM STATION_DATA
-WHERE month % 3 = 0;
+  FROM STATION_DATA
+ WHERE month % 3 = 0;
 
 
---
+-- search for multiple strings
 SELECT *
-FROM STATION_DATA
-WHERE report_code IN ('513A63','1F8A7B','EF616A');
+  FROM STATION_DATA
+ WHERE report_code IN ('513A63','1F8A7B','EF616A');
+
+
+-- check consistency of report codes
+SELECT *
+  FROM STATION_DATA
+ WHERE length(report_code) != 6;
 
 
 -- wildcards and LIKE keyword: starting with A
 SELECT *
-FROM STATION_DATA
-WHERE report_code LIKE 'A%';
+  FROM STATION_DATA
+ WHERE report_code LIKE 'A%';
 
 
 -- starting with B, 3rd character is C
 SELECT *
-FROM STATION_DATA
-WHERE report_code LIKE 'B_C%';
+  FROM STATION_DATA
+ WHERE report_code LIKE 'B_C%';
 
 
 -- booleans are represented with 0/1
 SELECT count(*)
-FROM STATION_DATA
-WHERE tornado = 1 and hail = 1;
+  FROM STATION_DATA
+ WHERE tornado = 1 and hail = 1;
 
 --  SQLite and MySQL allow to use true/false instead
 SELECT count(*)
-FROM STATION_DATA
-WHERE tornado = true AND hail = true;
+  FROM STATION_DATA
+ WHERE tornado = true AND hail = true;
+
+--  or short
+SELECT count(*)
+  FROM STATION_DATA
+ WHERE tornado AND hail;
 
 
 -- NULL
 SELECT *
-FROM STATION_DATA
-WHERE snow_depth IS NULL;
+  FROM STATION_DATA
+ WHERE snow_depth IS NULL;
 
 
 -- does not include NULL values
 SELECT *
-FROM STATION_DATA
-WHERE precipitation <= 0.5;
+  FROM STATION_DATA
+ WHERE precipitation <= 0.5;
 
 
 -- NULL values have to be included explicitly
 SELECT *
-FROM STATION_DATA
-WHERE precipitation IS NULL OR precipitation <= 0.5;
+  FROM STATION_DATA
+ WHERE precipitation IS NULL
+    OR precipitation <= 0.5;
 
 
 -- elegant way to handle NULL: coalesce() function
+-- here: turns NULL to 0 (only in WHERE clause)
 SELECT *
-FROM STATION_DATA
-WHERE coalesce(precipitation, 0) <= 0.5;
+  FROM STATION_DATA
+ WHERE coalesce(precipitation, 0) <= 0.5;
 
 
 -- coalesce() in SELECT statment
-SELECT
-    report_code
-  , coalesce(precipitation, 0) AS rainfall
-FROM STATION_DATA;
-
-
--- 
+SELECT report_code
+     , coalesce(precipitation, 0) AS rainfall
+  FROM STATION_DATA;

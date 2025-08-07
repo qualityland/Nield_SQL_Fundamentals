@@ -1,21 +1,21 @@
 -- DOES NOT WORK: aggregate values cannot be filtered with WHERE
-SELECT year,
-       SUM(precipitation) AS total_precipitation
+SELECT year
+     , SUM(precipitation) AS total_precipitation
   FROM station_data
  WHERE year >= 2005
-   AND total_precipitation > 30
+   AND total_precipitation > 30  -- not yet present
  GROUP BY year;
 
 
 -- filtering aggregate values with HAVING
-SELECT year,
-       SUM(precipitation) AS total_precipitation
+SELECT year
+     , SUM(precipitation) AS total_precipitation
   FROM station_data
  WHERE year >= 2005
  GROUP BY year
 HAVING total_precipitation > 30;
 /*
-WHERE filters on idividual records,
+WHERE filters on individual records,
 while HAVING filters on aggregate values
 */
 

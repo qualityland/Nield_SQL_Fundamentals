@@ -13,6 +13,7 @@ SELECT year, month,
    AND year >= 1990
 GROUP BY year, month;
 
+
 -- both in one statement
 SELECT year, month,
 SUM(CASE WHEN tornado = 1 THEN precipitation ELSE 0 END) AS tornado_precipitation,
@@ -20,6 +21,35 @@ SUM(CASE WHEN tornado = 0 THEN precipitation ELSE 0 END) AS non_tornado_precipit
 FROM station_data
 WHERE year >= 1990
 GROUP BY year, month;
+
+
+-- people who do not know this trick would try it lik this:
+-- (subselects with inner join)
+SELECT t.year
+     , t.month
+     , t.tornado_precipitation
+     , non_t.non_tornado_precipitation
+FROM (
+    SELECT year
+         , month
+         , sum(precipitation) AS tornado_precipitation
+      FROM STATION_DATA
+     WHERE tornado = 1
+       AND year >= 1990
+    GROUP BY year, month
+) t
+INNER JOIN
+(
+    SELECT year
+         , month
+         , sum(precipitation) AS non_tornado_precipitation
+      FROM STATION_DATA
+     WHERE tornado = 0
+       AND year >= 1990
+    GROUP BY year, month
+) non_t
+ON t.year = non_t.year AND t.month = non_t.month;
+
 
 
 -- when searching for MIN / MAX use NULL instead of 0

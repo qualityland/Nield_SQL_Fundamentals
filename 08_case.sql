@@ -3,8 +3,12 @@ SELECT *
 
 
  -- categories of wind_speed 
-SELECT report_code, year, month, day, wind_speed,
-CASE
+SELECT report_code
+     , year
+     , month
+     , day
+     , wind_speed
+,CASE
     WHEN wind_speed >= 40 THEN 'High'
     WHEN wind_speed >= 30 AND wind_speed < 40 THEN 'Moderate'
     ELSE 'Low'
@@ -13,8 +17,12 @@ FROM station_data;
 
 
 -- simplyfied (removed 'AND wind_speed < 40')
-SELECT report_code, year, month, day, wind_speed,
-CASE
+SELECT report_code
+     , year
+     , month
+     , day
+     , wind_speed
+,CASE
     WHEN wind_speed >= 40 THEN 'High'
     WHEN wind_speed >= 30 THEN 'Moderate'
     ELSE 'Low'
