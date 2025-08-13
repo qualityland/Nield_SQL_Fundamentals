@@ -1,47 +1,30 @@
--- 
-BEGIN;
+/*
 
+Database Design Questions
+-------------------------
 
-CREATE TABLE COMPANY (
-  COMPANY_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-  NAME VARCHAR(30) NOT NULL,
-  DESCRIPTION VARCHAR(60),
-  PRIMARY_CONTACT_ATTENDEE_ID INTEGER NOT NULL,
-  FOREIGN KEY (PRIMARY_CONTACT_ATTENDEE_ID) REFERENCES ATTENDEE(ATTENDEE_ID)
-);
+1. What are the business requirments?
+2. What tables do I need to fulfill those requirements?
+3. What columns will each table contain?
+4. How will the tables be normalized?
+5. What will their parent / child relationships be?
 
-CREATE TABLE ROOM (
-  ROOM_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-  FLOOR_NUMBER INTEGER NOT NULL,
-  SEAT_CAPACITY INTEGER NOT NULL
-);
+Data Questions
+--------------
 
-CREATE TABLE PRESENTATION (
-  PRESENTATION_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-  BOOKED_COMPANY_ID INTEGER NOT NULL,
-  BOOKED_ROOM_ID INTEGER NOT NULL,
-  START_TIME TIME,
-  END_TIME TIME,
-  FOREIGN KEY (BOOKED_COMPANY_ID) REFERENCES COMPANY(COMPANY_ID)
-  FOREIGN KEY (BOOKED_ROOM_ID) REFERENCES ROOM(ROOM_ID)
-);
+1. How much data will be populated into these tables?
+2. Who / what will populate data into these tables?
+3. Where will the data come from?
+4. Do we need processes to automatically populate these tables?
 
-CREATE TABLE ATTENDEE (
-   ATTENDEE_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-   FIRST_NAME VARCHAR (30) NOT NULL,
-   LAST_NAME VARCHAR (30) NOT NULL,
-   PHONE INTEGER,
-   EMAIL VARCHAR (30),
-   VIP BOOLEAN DEFAULT (0)
-);
+Security Questions
+------------------
 
-CREATE TABLE PRESENTATION_ATTENDANCE (
-  TICKET_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-  PRESENTATION_ID INTEGER,
-  ATTENDEE_ID INTEGER,
-  FOREIGN KEY (PRESENTATION_ID) REFERENCES PRESENTATION(PRESENTATION_ID)
-  FOREIGN KEY (ATTENDEE_ID) REFERENCES ATTENDEE(ATTENDEE_ID)
-);
+1. Who should have access to this database?
+2. Who should have access to which tables? Read-only access? Write access?
+3. Is this database critical to business operations?
+4. What backup plans do we have in the event of disaster / failure?
+5. Should changes to tables be logged?
+6. If the database is used for websites or web applications, is it secure?
 
-
-COMMIT;
+*/
